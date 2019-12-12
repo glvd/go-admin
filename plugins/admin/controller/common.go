@@ -1,14 +1,14 @@
 package controller
 
 import (
-	"github.com/GoAdminGroup/go-admin/context"
-	"github.com/GoAdminGroup/go-admin/modules/auth"
-	c "github.com/GoAdminGroup/go-admin/modules/config"
-	"github.com/GoAdminGroup/go-admin/modules/language"
-	"github.com/GoAdminGroup/go-admin/modules/service"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/constant"
-	"github.com/GoAdminGroup/go-admin/template"
-	"github.com/GoAdminGroup/go-admin/template/types"
+	"github.com/glvd/go-admin/context"
+	"github.com/glvd/go-admin/modules/auth"
+	c "github.com/glvd/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/language"
+	"github.com/glvd/go-admin/modules/service"
+	"github.com/glvd/go-admin/plugins/admin/modules/constant"
+	"github.com/glvd/go-admin/template"
+	"github.com/glvd/go-admin/template/types"
 	template2 "html/template"
 )
 

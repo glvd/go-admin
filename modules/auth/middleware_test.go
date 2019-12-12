@@ -1,9 +1,9 @@
 package auth
 
 import (
-	"github.com/GoAdminGroup/go-admin/context"
-	"github.com/GoAdminGroup/go-admin/modules/config"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/models"
+	"github.com/glvd/go-admin/context"
+	"github.com/glvd/go-admin/modules/config"
+	"github.com/glvd/go-admin/plugins/admin/models"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/url"

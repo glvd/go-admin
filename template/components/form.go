@@ -2,10 +2,10 @@ package components
 
 import (
 	"fmt"
-	"github.com/GoAdminGroup/go-admin/modules/config"
-	"github.com/GoAdminGroup/go-admin/modules/language"
-	"github.com/GoAdminGroup/go-admin/template/types"
-	"github.com/GoAdminGroup/go-admin/template/types/form"
+	"github.com/glvd/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/language"
+	"github.com/glvd/go-admin/template/types"
+	"github.com/glvd/go-admin/template/types/form"
 	"html/template"
 )
 

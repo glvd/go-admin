@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/GoAdminGroup/go-admin">
+  <a href="https://github.com/glvd/go-admin">
     <img width="50%" alt="go-admin" src="http://file.go-admin.cn/introduction/logo.png">
   </a>
 </p>
@@ -15,13 +15,13 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.com/GoAdminGroup/go-admin"><img alt="Go Report Card" src="https://api.travis-ci.com/GoAdminGroup/go-admin.svg?branch=master"></a>
-  <a href="https://goreportcard.com/report/github.com/GoAdminGroup/go-admin"><img alt="Go Report Card" src="https://camo.githubusercontent.com/59eed852617e19c272a4a4764fd09c669957fe75/68747470733a2f2f676f7265706f7274636172642e636f6d2f62616467652f6769746875622e636f6d2f6368656e6867352f676f2d61646d696e"></a>
-  <a href="https://goreportcard.com/report/github.com/GoAdminGroup/go-admin"><img alt="golang" src="https://img.shields.io/badge/awesome-golang-blue.svg"></a>
+  <a href="https://travis-ci.com/glvd/go-admin"><img alt="Go Report Card" src="https://api.travis-ci.com/glvd/go-admin.svg?branch=master"></a>
+  <a href="https://goreportcard.com/report/github.com/glvd/go-admin"><img alt="Go Report Card" src="https://camo.githubusercontent.com/59eed852617e19c272a4a4764fd09c669957fe75/68747470733a2f2f676f7265706f7274636172642e636f6d2f62616467652f6769746875622e636f6d2f6368656e6867352f676f2d61646d696e"></a>
+  <a href="https://goreportcard.com/report/github.com/glvd/go-admin"><img alt="golang" src="https://img.shields.io/badge/awesome-golang-blue.svg"></a>
   <a href="https://t.me/joinchat/NlyH6Bch2QARZkArithKvg" rel="nofollow"><img alt="telegram" src="https://img.shields.io/badge/chat%20on-telegram-blue" style="max-width:100%;"></a>
   <a href="https://goadmin.slack.com"><img alt="slack" src="https://img.shields.io/badge/chat on-Slack-yellow.svg"></a>
-  <a href="https://godoc.org/github.com/GoAdminGroup/go-admin" rel="nofollow"><img src="https://camo.githubusercontent.com/a9a286d43bdfff9fb41b88b25b35ea8edd2634fc/68747470733a2f2f676f646f632e6f72672f6769746875622e636f6d2f646572656b7061726b65722f64656c76653f7374617475732e737667" alt="GoDoc" data-canonical-src="https://godoc.org/github.com/derekparker/delve?status.svg" style="max-width:100%;"></a>
-  <a href="https://raw.githubusercontent.com/GoAdminGroup/go-admin/master/LICENSE" rel="nofollow"><img src="https://img.shields.io/badge/license-Apache2.0-blue.svg" alt="license" data-canonical-src="https://img.shields.io/badge/license-Apache2.0-blue.svg" style="max-width:100%;"></a>
+  <a href="https://godoc.org/github.com/glvd/go-admin" rel="nofollow"><img src="https://camo.githubusercontent.com/a9a286d43bdfff9fb41b88b25b35ea8edd2634fc/68747470733a2f2f676f646f632e6f72672f6769746875622e636f6d2f646572656b7061726b65722f64656c76653f7374617475732e737667" alt="GoDoc" data-canonical-src="https://godoc.org/github.com/derekparker/delve?status.svg" style="max-width:100%;"></a>
+  <a href="https://raw.githubusercontent.com/glvd/go-admin/master/LICENSE" rel="nofollow"><img src="https://img.shields.io/badge/license-Apache2.0-blue.svg" alt="license" data-canonical-src="https://img.shields.io/badge/license-Apache2.0-blue.svg" style="max-width:100%;"></a>
 </p> 
 
 <p align="center">
@@ -35,7 +35,7 @@ GoAdmin is a toolkit to help you build a data visualization admin panel for your
 demo: [https://demo.go-admin.com](https://demo.go-admin.com)
 account: admin  password: admin
 
-demo source code: https://github.com/GoAdminGroup/demo.go-admin.cn
+demo source code: https://github.com/glvd/demo.go-admin.cn
 
 ![interface](http://file.go-admin.cn/introduction/interface_en_2.png)
 
@@ -48,11 +48,11 @@ demo source code: https://github.com/GoAdminGroup/demo.go-admin.cn
 - ⚙️ **Frameworks**: support most of the go web frameworks.
 
 ## Translation
-We need your help: [https://github.com/GoAdminGroup/docs/issues/1](https://github.com/GoAdminGroup/docs/issues/1)
+We need your help: [https://github.com/glvd/docs/issues/1](https://github.com/glvd/docs/issues/1)
 
 ## Who is using
 
-[Comment the issue to tell us](https://github.com/GoAdminGroup/go-admin/issues/71).
+[Comment the issue to tell us](https://github.com/glvd/go-admin/issues/71).
 
 ## How to
 
@@ -60,9 +60,9 @@ Following three steps to run it.
 
 ### Step 1: import sql
 
-[mysql](https://raw.githubusercontent.com/GoAdminGroup/go-admin/master/data/admin.sql)
-[postgresql](https://raw.githubusercontent.com/GoAdminGroup/go-admin/master/data/admin.pgsql)
-[sqlite](https://raw.githubusercontent.com/GoAdminGroup/go-admin/master/data/admin.db)
+[mysql](https://raw.githubusercontent.com/glvd/go-admin/master/data/admin.sql)
+[postgresql](https://raw.githubusercontent.com/glvd/go-admin/master/data/admin.pgsql)
+[sqlite](https://raw.githubusercontent.com/glvd/go-admin/master/data/admin.db)
 
 ### Step 2: create main.go
 
@@ -74,17 +74,17 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	_ "github.com/GoAdminGroup/go-admin/adapter/gin"
-	_ "github.com/GoAdminGroup/go-admin/modules/db/drivers/mysql"
-	"github.com/GoAdminGroup/go-admin/engine"
-	"github.com/GoAdminGroup/go-admin/plugins/admin"
-	"github.com/GoAdminGroup/go-admin/modules/config"
+	_ "github.com/glvd/go-admin/adapter/gin"
+	_ "github.com/glvd/go-admin/modules/db/drivers/mysql"
+	"github.com/glvd/go-admin/engine"
+	"github.com/glvd/go-admin/plugins/admin"
+	"github.com/glvd/go-admin/modules/config"
 	"github.com/GoAdminGroup/themes/adminlte"
-	"github.com/GoAdminGroup/go-admin/template"
-	"github.com/GoAdminGroup/go-admin/template/chartjs"
-	"github.com/GoAdminGroup/go-admin/template/types"
-	"github.com/GoAdminGroup/go-admin/examples/datamodel"
-	"github.com/GoAdminGroup/go-admin/modules/language"
+	"github.com/glvd/go-admin/template"
+	"github.com/glvd/go-admin/template/chartjs"
+	"github.com/glvd/go-admin/template/types"
+	"github.com/glvd/go-admin/examples/datamodel"
+	"github.com/glvd/go-admin/modules/language"
 )
 
 func main() {
@@ -122,7 +122,7 @@ func main() {
 		ColorScheme: adminlte.ColorschemeSkinBlack,
 	}
 
-    	// Generators: see https://github.com/GoAdminGroup/go-admin/blob/master/examples/datamodel/tables.go 
+    	// Generators: see https://github.com/glvd/go-admin/blob/master/examples/datamodel/tables.go 
 	adminPlugin := admin.NewAdmin(datamodel.Generators)
 	
 	// add component chartjs
@@ -152,7 +152,7 @@ func main() {
 </p>
 </details>
 
-More Examples: [https://github.com/GoAdminGroup/go-admin/tree/master/examples](https://github.com/GoAdminGroup/go-admin/tree/master/examples)
+More Examples: [https://github.com/glvd/go-admin/tree/master/examples](https://github.com/glvd/go-admin/tree/master/examples)
 
 ### Step 3: run
 
@@ -162,7 +162,7 @@ GO111MODULE=on go run main.go
 
 visit: [http://localhost:9033/admin](http://localhost:9033/admin)
 
-[A super simple example here](https://github.com/GoAdminGroup/example)
+[A super simple example here](https://github.com/glvd/example)
 
 See the [docs](https://www.go-admin.com/docs) for more details.
 

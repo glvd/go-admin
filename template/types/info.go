@@ -2,10 +2,10 @@ package types
 
 import (
 	"encoding/json"
-	"github.com/GoAdminGroup/go-admin/modules/db"
-	"github.com/GoAdminGroup/go-admin/modules/utils"
-	"github.com/GoAdminGroup/go-admin/template/types/form"
-	"github.com/GoAdminGroup/go-admin/template/types/table"
+	"github.com/glvd/go-admin/modules/db"
+	"github.com/glvd/go-admin/modules/utils"
+	"github.com/glvd/go-admin/template/types/form"
+	"github.com/glvd/go-admin/template/types/table"
 	"html"
 	"html/template"
 	"strconv"

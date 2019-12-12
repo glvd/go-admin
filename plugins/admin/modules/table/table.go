@@ -3,19 +3,19 @@ package table
 import (
 	"errors"
 	"fmt"
-	"github.com/GoAdminGroup/go-admin/modules/service"
+	"github.com/glvd/go-admin/modules/service"
 	"html/template"
 	"strconv"
 	"strings"
 
-	"github.com/GoAdminGroup/go-admin/modules/db"
-	"github.com/GoAdminGroup/go-admin/modules/db/dialect"
-	"github.com/GoAdminGroup/go-admin/modules/logger"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/form"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/paginator"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/parameter"
-	"github.com/GoAdminGroup/go-admin/template/types"
+	"github.com/glvd/go-admin/modules/db"
+	"github.com/glvd/go-admin/modules/db/dialect"
+	"github.com/glvd/go-admin/modules/logger"
+	"github.com/glvd/go-admin/plugins/admin/modules"
+	"github.com/glvd/go-admin/plugins/admin/modules/form"
+	"github.com/glvd/go-admin/plugins/admin/modules/paginator"
+	"github.com/glvd/go-admin/plugins/admin/modules/parameter"
+	"github.com/glvd/go-admin/template/types"
 )
 
 type Generator func() Table

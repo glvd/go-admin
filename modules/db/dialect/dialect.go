@@ -5,7 +5,7 @@
 package dialect
 
 import (
-	"github.com/GoAdminGroup/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/config"
 	"strings"
 )
 

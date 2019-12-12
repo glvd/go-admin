@@ -2,7 +2,7 @@ package components
 
 import (
 	"fmt"
-	"github.com/GoAdminGroup/go-admin/template/types"
+	"github.com/glvd/go-admin/template/types"
 	"html/template"
 )
 

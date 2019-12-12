@@ -1,8 +1,8 @@
 package components
 
 import (
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules"
-	"github.com/GoAdminGroup/go-admin/template/types"
+	"github.com/glvd/go-admin/plugins/admin/modules"
+	"github.com/glvd/go-admin/template/types"
 	"html/template"
 )
 

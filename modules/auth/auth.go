@@ -5,11 +5,11 @@
 package auth
 
 import (
-	"github.com/GoAdminGroup/go-admin/context"
-	"github.com/GoAdminGroup/go-admin/modules/db"
-	"github.com/GoAdminGroup/go-admin/modules/service"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/models"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules"
+	"github.com/glvd/go-admin/context"
+	"github.com/glvd/go-admin/modules/db"
+	"github.com/glvd/go-admin/modules/service"
+	"github.com/glvd/go-admin/plugins/admin/models"
+	"github.com/glvd/go-admin/plugins/admin/modules"
 	"golang.org/x/crypto/bcrypt"
 	"sync"
 )

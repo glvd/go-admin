@@ -2,10 +2,10 @@ package controller
 
 import (
 	"encoding/json"
-	"github.com/GoAdminGroup/go-admin/modules/db"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/models"
+	"github.com/glvd/go-admin/modules/db"
+	"github.com/glvd/go-admin/plugins/admin/models"
 
-	"github.com/GoAdminGroup/go-admin/context"
+	"github.com/glvd/go-admin/context"
 )
 
 // RecordOperationLog record all operation logs, store into database.

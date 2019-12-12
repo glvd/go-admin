@@ -6,8 +6,8 @@ package db
 
 import (
 	"database/sql"
-	"github.com/GoAdminGroup/go-admin/modules/config"
-	"github.com/GoAdminGroup/go-admin/modules/service"
+	"github.com/glvd/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/service"
 )
 
 const (

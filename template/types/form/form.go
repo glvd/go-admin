@@ -1,7 +1,7 @@
 package form
 
 import (
-	"github.com/GoAdminGroup/go-admin/modules/db"
+	"github.com/glvd/go-admin/modules/db"
 )
 
 type Type uint8

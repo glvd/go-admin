@@ -7,8 +7,8 @@ package db
 import (
 	dbsql "database/sql"
 	"errors"
-	"github.com/GoAdminGroup/go-admin/modules/db/dialect"
-	"github.com/GoAdminGroup/go-admin/modules/logger"
+	"github.com/glvd/go-admin/modules/db/dialect"
+	"github.com/glvd/go-admin/modules/logger"
 	"regexp"
 	"strconv"
 	"strings"

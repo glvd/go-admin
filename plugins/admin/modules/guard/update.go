@@ -1,9 +1,9 @@
 package guard
 
 import (
-	"github.com/GoAdminGroup/go-admin/context"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/form"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/table"
+	"github.com/glvd/go-admin/context"
+	"github.com/glvd/go-admin/plugins/admin/modules/form"
+	"github.com/glvd/go-admin/plugins/admin/modules/table"
 	"net/http"
 )
 

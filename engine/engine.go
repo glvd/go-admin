@@ -5,13 +5,13 @@
 package engine
 
 import (
-	"github.com/GoAdminGroup/go-admin/adapter"
-	"github.com/GoAdminGroup/go-admin/modules/config"
-	"github.com/GoAdminGroup/go-admin/modules/db"
-	"github.com/GoAdminGroup/go-admin/modules/service"
-	"github.com/GoAdminGroup/go-admin/plugins"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/models"
-	"github.com/GoAdminGroup/go-admin/template/types"
+	"github.com/glvd/go-admin/adapter"
+	"github.com/glvd/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/db"
+	"github.com/glvd/go-admin/modules/service"
+	"github.com/glvd/go-admin/plugins"
+	"github.com/glvd/go-admin/plugins/admin/models"
+	"github.com/glvd/go-admin/template/types"
 )
 
 // Engine is the core component of goAdmin. It has two attributes.

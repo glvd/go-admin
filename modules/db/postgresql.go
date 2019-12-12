@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/GoAdminGroup/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/config"
 )
 
 // Postgresql is a Connection of mssql.

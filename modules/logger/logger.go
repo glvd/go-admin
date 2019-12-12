@@ -5,8 +5,8 @@
 package logger
 
 import (
-	"github.com/GoAdminGroup/go-admin/context"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/constant"
+	"github.com/glvd/go-admin/context"
+	"github.com/glvd/go-admin/plugins/admin/modules/constant"
 	"github.com/mgutz/ansi"
 	"github.com/sirupsen/logrus"
 	"io"

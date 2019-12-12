@@ -7,7 +7,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"github.com/GoAdminGroup/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/config"
 	"net/url"
 	"sync"
 )

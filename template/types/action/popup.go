@@ -1,8 +1,8 @@
 package action
 
 import (
-	"github.com/GoAdminGroup/go-admin/modules/utils"
-	template2 "github.com/GoAdminGroup/go-admin/template"
+	"github.com/glvd/go-admin/modules/utils"
+	template2 "github.com/glvd/go-admin/template"
 	"html/template"
 )
 

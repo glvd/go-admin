@@ -1,14 +1,14 @@
 package guard
 
 import (
-	"github.com/GoAdminGroup/go-admin/context"
-	"github.com/GoAdminGroup/go-admin/modules/auth"
-	"github.com/GoAdminGroup/go-admin/modules/config"
-	"github.com/GoAdminGroup/go-admin/modules/service"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/form"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/parameter"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/table"
+	"github.com/glvd/go-admin/context"
+	"github.com/glvd/go-admin/modules/auth"
+	"github.com/glvd/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/service"
+	"github.com/glvd/go-admin/plugins/admin/modules"
+	"github.com/glvd/go-admin/plugins/admin/modules/form"
+	"github.com/glvd/go-admin/plugins/admin/modules/parameter"
+	"github.com/glvd/go-admin/plugins/admin/modules/table"
 	"html/template"
 	"mime/multipart"
 	"strings"

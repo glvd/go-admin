@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/GoAdminGroup/go-admin/context"
-	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/guard"
+	"github.com/glvd/go-admin/context"
+	"github.com/glvd/go-admin/plugins/admin/modules/guard"
 	"net/http"
 )
 
