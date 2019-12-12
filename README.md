@@ -79,7 +79,7 @@ import (
 	"github.com/glvd/go-admin/engine"
 	"github.com/glvd/go-admin/plugins/admin"
 	"github.com/glvd/go-admin/modules/config"
-	"github.com/GoAdminGroup/themes/adminlte"
+	"github.com/glvd/themes/adminlte"
 	"github.com/glvd/go-admin/template"
 	"github.com/glvd/go-admin/template/chartjs"
 	"github.com/glvd/go-admin/template/types"

@@ -1,18 +1,18 @@
 package example
 
 import (
-	"github.com/GoAdminGroup/themes/adminlte/components/chart_legend"
-	"github.com/GoAdminGroup/themes/adminlte/components/description"
-	"github.com/GoAdminGroup/themes/adminlte/components/infobox"
-	"github.com/GoAdminGroup/themes/adminlte/components/productlist"
-	"github.com/GoAdminGroup/themes/adminlte/components/progress_group"
-	"github.com/GoAdminGroup/themes/adminlte/components/smallbox"
 	"github.com/glvd/go-admin/context"
 	"github.com/glvd/go-admin/modules/auth"
 	"github.com/glvd/go-admin/modules/page"
 	template2 "github.com/glvd/go-admin/template"
 	"github.com/glvd/go-admin/template/chartjs"
 	"github.com/glvd/go-admin/template/types"
+	"github.com/glvd/themes/adminlte/components/chart_legend"
+	"github.com/glvd/themes/adminlte/components/description"
+	"github.com/glvd/themes/adminlte/components/infobox"
+	"github.com/glvd/themes/adminlte/components/productlist"
+	"github.com/glvd/themes/adminlte/components/progress_group"
+	"github.com/glvd/themes/adminlte/components/smallbox"
 	"html/template"
 )
 
