@@ -130,7 +130,7 @@ type DBDriver struct {
 
 // Load implements the PersistenceDriver.Load.
 func (driver *DBDriver) Load(sid string) map[string]interface{} {
-	sesModel, _ := driver.table("goadmin_session").Where("sid", "=", sid).First()
+	sesModel, _ := driver.table("adm_session").Where("sid", "=", sid).First()
 
 	if sesModel == nil {
 		return map[string]interface{}{}
@@ -157,11 +157,11 @@ func deleteOverdueSession(conn db.Connection) {
 	)
 
 	if db.DriverPostgresql == driver {
-		cmd = `delete from goadmin_session where extract(epoch from now()) - ` + duration + ` > extract(epoch from created_at)`
+		cmd = `delete from adm_session where extract(epoch from now()) - ` + duration + ` > extract(epoch from created_at)`
 	} else if db.DriverMysql == driver {
-		cmd = `delete from goadmin_session where unix_timestamp(created_at) < unix_timestamp() - ` + duration
+		cmd = `delete from adm_session where unix_timestamp(created_at) < unix_timestamp() - ` + duration
 	} else if db.DriverSqlite == driver {
-		cmd = `delete from goadmin_session where strftime('%s', created_at) < strftime('%s', 'now') - ` + duration
+		cmd = `delete from adm_session where strftime('%s', created_at) < strftime('%s', 'now') - ` + duration
 	}
 
 	logger.LogSQL(cmd, nil)
@@ -176,18 +176,18 @@ func (driver *DBDriver) Update(sid string, values map[string]interface{}) {
 
 	if sid != "" {
 		if len(values) == 0 {
-			_ = driver.table("goadmin_session").Where("sid", "=", sid).Delete()
+			_ = driver.table("adm_session").Where("sid", "=", sid).Delete()
 			return
 		}
 		valuesByte, _ := json.Marshal(values)
-		sesModel, _ := driver.table("goadmin_session").Where("sid", "=", sid).First()
+		sesModel, _ := driver.table("adm_session").Where("sid", "=", sid).First()
 		if sesModel == nil {
-			_, _ = driver.table("goadmin_session").Insert(dialect.H{
+			_, _ = driver.table("adm_session").Insert(dialect.H{
 				"values": string(valuesByte),
 				"sid":    sid,
 			})
 		} else {
-			_, _ = driver.table("goadmin_session").
+			_, _ = driver.table("adm_session").
 				Where("sid", "=", sid).
 				Update(dialect.H{
 					"values": string(valuesByte),
