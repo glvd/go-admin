@@ -22,13 +22,13 @@ type MenuModel struct {
 
 // Menu return a default menu model.
 func Menu() MenuModel {
-	return MenuModel{Base: Base{TableName: "goadmin_menu"}}
+	return MenuModel{Base: Base{TableName: "adm_menu"}}
 }
 
 // MenuWithId return a default menu model of given id.
 func MenuWithId(id string) MenuModel {
 	idInt, _ := strconv.Atoi(id)
-	return MenuModel{Base: Base{TableName: "goadmin_menu"}, Id: int64(idInt)}
+	return MenuModel{Base: Base{TableName: "adm_menu"}, Id: int64(idInt)}
 }
 
 func (t MenuModel) SetConn(con db.Connection) MenuModel {
@@ -67,7 +67,7 @@ func (t MenuModel) New(title, icon, uri, header string, parentId, order int64) M
 // Delete delete the menu model.
 func (t MenuModel) Delete() {
 	_ = t.Table(t.TableName).Where("id", "=", t.Id).Delete()
-	_ = t.Table("goadmin_role_menu").Where("menu_id", "=", t.Id).Delete()
+	_ = t.Table("adm_role_menu").Where("menu_id", "=", t.Id).Delete()
 	items, _ := t.Table(t.TableName).Where("parent_id", "=", t.Id).All()
 
 	if len(items) > 0 {
@@ -75,7 +75,7 @@ func (t MenuModel) Delete() {
 		for i := 0; i < len(ids); i++ {
 			ids[i] = items[i]["id"]
 		}
-		_ = t.Table("goadmin_role_menu").WhereIn("menu_id", ids).Delete()
+		_ = t.Table("adm_role_menu").WhereIn("menu_id", ids).Delete()
 	}
 
 	_ = t.Table(t.TableName).Where("parent_id", "=", t.Id).Delete()
@@ -135,7 +135,7 @@ func (t MenuModel) ResetOrder(data []map[string]interface{}) {
 
 // CheckRole check the role if has permission to get the menu.
 func (t MenuModel) CheckRole(roleId string) bool {
-	checkRole, _ := t.Table("goadmin_role_menu").
+	checkRole, _ := t.Table("adm_role_menu").
 		Where("role_id", "=", roleId).
 		Where("menu_id", "=", t.Id).
 		First()
