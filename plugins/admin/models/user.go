@@ -138,8 +138,8 @@ func (t UserModel) WithPermissions() UserModel {
 		LeftJoin("adm_permissions", "adm_permissions.id", "=", "adm_user_permissions.permission_id").
 		Where("user_id", "=", t.Id).
 		Select("adm_permissions.http_method", "adm_permissions.http_path",
-			"adm_permissions.id", "adm_permissions.name", "goadmin_permissions.slug",
-			"goadmin_permissions.created_at", "goadmin_permissions.updated_at").
+			"adm_permissions.id", "adm_permissions.name", "adm_permissions.slug",
+			"adm_permissions.created_at", "adm_permissions.updated_at").
 		All()
 
 	permissions = append(permissions, userPermissions...)
@@ -167,16 +167,16 @@ func (t UserModel) WithMenus() UserModel {
 	var menuIdsModel []map[string]interface{}
 
 	if t.IsSuperAdmin() {
-		menuIdsModel, _ = t.Table("goadmin_role_menu").
-			LeftJoin("goadmin_menu", "goadmin_menu.id", "=", "goadmin_role_menu.menu_id").
+		menuIdsModel, _ = t.Table("adm_role_menu").
+			LeftJoin("adm_menu", "adm_menu.id", "=", "adm_role_menu.menu_id").
 			Select("menu_id", "parent_id").
 			All()
 	} else {
 		rolesId := t.GetAllRoleId()
 		if len(rolesId) > 0 {
-			menuIdsModel, _ = t.Table("goadmin_role_menu").
-				LeftJoin("goadmin_menu", "goadmin_menu.id", "=", "goadmin_role_menu.menu_id").
-				WhereIn("goadmin_role_menu.role_id", rolesId).
+			menuIdsModel, _ = t.Table("adm_role_menu").
+				LeftJoin("adm_menu", "adm_menu.id", "=", "adm_role_menu.menu_id").
+				WhereIn("adm_role_menu.role_id", rolesId).
 				Select("menu_id", "parent_id").
 				All()
 		}
@@ -264,7 +264,7 @@ func (t UserModel) UpdatePwd(password string) UserModel {
 
 // CheckRole check the role of the user model.
 func (t UserModel) CheckRoleId(roleId string) bool {
-	checkRole, _ := t.Table("goadmin_role_users").
+	checkRole, _ := t.Table("adm_role_users").
 		Where("role_id", "=", roleId).
 		Where("user_id", "=", t.Id).
 		First()
@@ -273,7 +273,7 @@ func (t UserModel) CheckRoleId(roleId string) bool {
 
 // DeleteRoles delete all the roles of the user model.
 func (t UserModel) DeleteRoles() {
-	_ = t.Table("goadmin_role_users").
+	_ = t.Table("adm_role_users").
 		Where("user_id", "=", t.Id).
 		Delete()
 }
@@ -282,7 +282,7 @@ func (t UserModel) DeleteRoles() {
 func (t UserModel) AddRole(roleId string) {
 	if roleId != "" {
 		if !t.CheckRoleId(roleId) {
-			_, _ = t.Table("goadmin_role_users").
+			_, _ = t.Table("adm_role_users").
 				Insert(dialect.H{
 					"role_id": roleId,
 					"user_id": t.Id,
@@ -304,7 +304,7 @@ func (t UserModel) CheckRole(slug string) bool {
 
 // CheckPermission check the permission of the user.
 func (t UserModel) CheckPermissionById(permissionId string) bool {
-	checkPermission, _ := t.Table("goadmin_user_permissions").
+	checkPermission, _ := t.Table("adm_user_permissions").
 		Where("permission_id", "=", permissionId).
 		Where("user_id", "=", t.Id).
 		First()
@@ -324,7 +324,7 @@ func (t UserModel) CheckPermission(permission string) bool {
 
 // DeletePermissions delete all the permissions of the user model.
 func (t UserModel) DeletePermissions() {
-	_ = t.Table("goadmin_user_permissions").
+	_ = t.Table("adm_user_permissions").
 		Where("user_id", "=", t.Id).
 		Delete()
 }
@@ -333,7 +333,7 @@ func (t UserModel) DeletePermissions() {
 func (t UserModel) AddPermission(permissionId string) {
 	if permissionId != "" {
 		if !t.CheckPermissionById(permissionId) {
-			_, _ = t.Table("goadmin_user_permissions").
+			_, _ = t.Table("adm_user_permissions").
 				Insert(dialect.H{
 					"permission_id": permissionId,
 					"user_id":       t.Id,

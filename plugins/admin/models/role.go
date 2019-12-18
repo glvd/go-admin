@@ -94,7 +94,7 @@ func (t RoleModel) CheckPermission(permissionId string) bool {
 
 // DeletePermissions delete all the permissions of role.
 func (t RoleModel) DeletePermissions() {
-	_ = t.Table("goadmin_role_permissions").
+	_ = t.Table("adm_role_permissions").
 		Where("role_id", "=", t.Id).
 		Delete()
 }
@@ -103,7 +103,7 @@ func (t RoleModel) DeletePermissions() {
 func (t RoleModel) AddPermission(permissionId string) {
 	if permissionId != "" {
 		if !t.CheckPermission(permissionId) {
-			_, _ = t.Table("goadmin_role_permissions").
+			_, _ = t.Table("adm_role_permissions").
 				Insert(dialect.H{
 					"permission_id": permissionId,
 					"role_id":       t.Id,
