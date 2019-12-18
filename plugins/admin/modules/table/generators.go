@@ -504,7 +504,7 @@ func GetOpTable() (OpTable Table) {
 	formList.AddField(lg("updatedAt"), "updated_at", db.Timestamp, form.Default).FieldNotAllowAdd()
 	formList.AddField(lg("createdAt"), "created_at", db.Timestamp, form.Default).FieldNotAllowAdd()
 
-	formList.SetTable("goadmin_operation_log").
+	formList.SetTable("adm_operation_log").
 		SetTitle(lg("operation log")).
 		SetDescription(lg("operation log"))
 
@@ -560,7 +560,7 @@ func GetMenuTable() (MenuTable Table) {
 		})
 
 	var roles, parents []map[string]string
-	rolesModel, _ := table("goadmin_roles").Select("id", "slug").All()
+	rolesModel, _ := table("adm_roles").Select("id", "slug").All()
 
 	for _, v := range rolesModel {
 		roles = append(roles, map[string]string{

@@ -146,7 +146,7 @@ func (t MenuModel) CheckRole(roleId string) bool {
 func (t MenuModel) AddRole(roleId string) {
 	if roleId != "" {
 		if !t.CheckRole(roleId) {
-			_, _ = t.Table("goadmin_role_menu").
+			_, _ = t.Table("adm_role_menu").
 				Insert(dialect.H{
 					"role_id": roleId,
 					"menu_id": t.Id,
@@ -157,7 +157,7 @@ func (t MenuModel) AddRole(roleId string) {
 
 // DeleteRoles delete roles with menu.
 func (t MenuModel) DeleteRoles() {
-	_ = t.Table("goadmin_role_menu").
+	_ = t.Table("adm_role_menu").
 		Where("menu_id", "=", t.Id).
 		Delete()
 }

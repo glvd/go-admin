@@ -30,10 +30,10 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
--- Name: goadmin_menu_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: adm_menu_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.goadmin_menu_myid_seq
+CREATE SEQUENCE public.adm_menu_myid_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -41,18 +41,18 @@ CREATE SEQUENCE public.goadmin_menu_myid_seq
     CACHE 1;
 
 
-ALTER TABLE public.goadmin_menu_myid_seq OWNER TO postgres;
+ALTER TABLE public.adm_menu_myid_seq OWNER TO postgres;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: goadmin_menu; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_menu; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_menu (
-    id integer DEFAULT nextval('public.goadmin_menu_myid_seq'::regclass) NOT NULL,
+CREATE TABLE public.adm_menu (
+    id integer DEFAULT nextval('public.adm_menu_myid_seq'::regclass) NOT NULL,
     parent_id integer DEFAULT 0 NOT NULL,
     type integer DEFAULT 0,
     "order" integer DEFAULT 0 NOT NULL,
@@ -65,13 +65,13 @@ CREATE TABLE public.goadmin_menu (
 );
 
 
-ALTER TABLE public.goadmin_menu OWNER TO postgres;
+ALTER TABLE public.adm_menu OWNER TO postgres;
 
 --
--- Name: goadmin_operation_log_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: adm_operation_log_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.goadmin_operation_log_myid_seq
+CREATE SEQUENCE public.adm_operation_log_myid_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -79,14 +79,14 @@ CREATE SEQUENCE public.goadmin_operation_log_myid_seq
     CACHE 1;
 
 
-ALTER TABLE public.goadmin_operation_log_myid_seq OWNER TO postgres;
+ALTER TABLE public.adm_operation_log_myid_seq OWNER TO postgres;
 
 --
--- Name: goadmin_operation_log; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_operation_log; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_operation_log (
-    id integer DEFAULT nextval('public.goadmin_operation_log_myid_seq'::regclass) NOT NULL,
+CREATE TABLE public.adm_operation_log (
+    id integer DEFAULT nextval('public.adm_operation_log_myid_seq'::regclass) NOT NULL,
     user_id integer NOT NULL,
     path character varying(255) NOT NULL,
     method character varying(10) NOT NULL,
@@ -97,13 +97,13 @@ CREATE TABLE public.goadmin_operation_log (
 );
 
 
-ALTER TABLE public.goadmin_operation_log OWNER TO postgres;
+ALTER TABLE public.adm_operation_log OWNER TO postgres;
 
 --
--- Name: goadmin_permissions_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: adm_permissions_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.goadmin_permissions_myid_seq
+CREATE SEQUENCE public.adm_permissions_myid_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -111,14 +111,14 @@ CREATE SEQUENCE public.goadmin_permissions_myid_seq
     CACHE 1;
 
 
-ALTER TABLE public.goadmin_permissions_myid_seq OWNER TO postgres;
+ALTER TABLE public.adm_permissions_myid_seq OWNER TO postgres;
 
 --
--- Name: goadmin_permissions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_permissions; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_permissions (
-    id integer DEFAULT nextval('public.goadmin_permissions_myid_seq'::regclass) NOT NULL,
+CREATE TABLE public.adm_permissions (
+    id integer DEFAULT nextval('public.adm_permissions_myid_seq'::regclass) NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
     http_method character varying(255),
@@ -128,13 +128,13 @@ CREATE TABLE public.goadmin_permissions (
 );
 
 
-ALTER TABLE public.goadmin_permissions OWNER TO postgres;
+ALTER TABLE public.adm_permissions OWNER TO postgres;
 
 --
--- Name: goadmin_role_menu; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_role_menu; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_role_menu (
+CREATE TABLE public.adm_role_menu (
     role_id integer NOT NULL,
     menu_id integer NOT NULL,
     created_at timestamp without time zone DEFAULT now(),
@@ -142,13 +142,13 @@ CREATE TABLE public.goadmin_role_menu (
 );
 
 
-ALTER TABLE public.goadmin_role_menu OWNER TO postgres;
+ALTER TABLE public.adm_role_menu OWNER TO postgres;
 
 --
--- Name: goadmin_role_permissions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_role_permissions; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_role_permissions (
+CREATE TABLE public.adm_role_permissions (
     role_id integer NOT NULL,
     permission_id integer NOT NULL,
     created_at timestamp without time zone DEFAULT now(),
@@ -156,13 +156,13 @@ CREATE TABLE public.goadmin_role_permissions (
 );
 
 
-ALTER TABLE public.goadmin_role_permissions OWNER TO postgres;
+ALTER TABLE public.adm_role_permissions OWNER TO postgres;
 
 --
--- Name: goadmin_role_users; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_role_users; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_role_users (
+CREATE TABLE public.adm_role_users (
     role_id integer NOT NULL,
     user_id integer NOT NULL,
     created_at timestamp without time zone DEFAULT now(),
@@ -170,13 +170,13 @@ CREATE TABLE public.goadmin_role_users (
 );
 
 
-ALTER TABLE public.goadmin_role_users OWNER TO postgres;
+ALTER TABLE public.adm_role_users OWNER TO postgres;
 
 --
--- Name: goadmin_roles_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: adm_roles_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.goadmin_roles_myid_seq
+CREATE SEQUENCE public.adm_roles_myid_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -184,14 +184,14 @@ CREATE SEQUENCE public.goadmin_roles_myid_seq
     CACHE 1;
 
 
-ALTER TABLE public.goadmin_roles_myid_seq OWNER TO postgres;
+ALTER TABLE public.adm_roles_myid_seq OWNER TO postgres;
 
 --
--- Name: goadmin_roles; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_roles; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_roles (
-    id integer DEFAULT nextval('public.goadmin_roles_myid_seq'::regclass) NOT NULL,
+CREATE TABLE public.adm_roles (
+    id integer DEFAULT nextval('public.adm_roles_myid_seq'::regclass) NOT NULL,
     name character varying NOT NULL,
     slug character varying NOT NULL,
     created_at timestamp without time zone DEFAULT now(),
@@ -199,13 +199,13 @@ CREATE TABLE public.goadmin_roles (
 );
 
 
-ALTER TABLE public.goadmin_roles OWNER TO postgres;
+ALTER TABLE public.adm_roles OWNER TO postgres;
 
 --
--- Name: goadmin_session_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: adm_session_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.goadmin_session_myid_seq
+CREATE SEQUENCE public.adm_session_myid_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -213,14 +213,14 @@ CREATE SEQUENCE public.goadmin_session_myid_seq
     CACHE 1;
 
 
-ALTER TABLE public.goadmin_session_myid_seq OWNER TO postgres;
+ALTER TABLE public.adm_session_myid_seq OWNER TO postgres;
 
 --
--- Name: goadmin_session; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_session; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_session (
-    id integer DEFAULT nextval('public.goadmin_session_myid_seq'::regclass) NOT NULL,
+CREATE TABLE public.adm_session (
+    id integer DEFAULT nextval('public.adm_session_myid_seq'::regclass) NOT NULL,
     sid character varying(50) NOT NULL,
     "values" character varying(3000) NOT NULL,
     created_at timestamp without time zone DEFAULT now(),
@@ -228,7 +228,7 @@ CREATE TABLE public.goadmin_session (
 );
 
 
-ALTER TABLE public.goadmin_session OWNER TO postgres;
+ALTER TABLE public.adm_session OWNER TO postgres;
 
 --
 -- Name: goadmin_user_permissions; Type: TABLE; Schema: public; Owner: postgres
