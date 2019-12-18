@@ -277,10 +277,10 @@ CREATE TABLE public.goadmin_users (
 ALTER TABLE public.goadmin_users OWNER TO postgres;
 
 --
--- Data for Name: goadmin_menu; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_menu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_menu (id, parent_id, type, "order", title, header, icon, uri, created_at, updated_at) FROM stdin;
+COPY public.adm_menu (id, parent_id, type, "order", title, header, icon, uri, created_at, updated_at) FROM stdin;
 1	0	1	2	Admin	\N	fa-tasks		2019-09-10 00:00:00	2019-09-10 00:00:00
 2	1	1	2	Users	\N	fa-users	/info/manager	2019-09-10 00:00:00	2019-09-10 00:00:00
 3	1	1	3	Roles	\N	fa-user	/info/roles	2019-09-10 00:00:00	2019-09-10 00:00:00
@@ -412,10 +412,10 @@ COPY public.goadmin_users (id, username, password, name, avatar, remember_token,
 
 
 --
--- Name: goadmin_menu_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: adm_menu_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.goadmin_menu_myid_seq', 7, true);
+SELECT pg_catalog.setval('public.adm_menu_myid_seq', 7, true);
 
 
 --
@@ -454,11 +454,11 @@ SELECT pg_catalog.setval('public.goadmin_users_myid_seq', 2, true);
 
 
 --
--- Name: goadmin_menu goadmin_menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: adm_menu adm_menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.goadmin_menu
-    ADD CONSTRAINT goadmin_menu_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.adm_menu
+    ADD CONSTRAINT adm_menu_pkey PRIMARY KEY (id);
 
 
 --

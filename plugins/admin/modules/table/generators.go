@@ -526,7 +526,7 @@ func GetMenuTable() (MenuTable Table) {
 	info.AddField(lg("createdAt"), "created_at", db.Timestamp)
 	info.AddField(lg("updatedAt"), "updated_at", db.Timestamp)
 
-	info.SetTable("goadmin_menu").
+	info.SetTable("adm_menu").
 		SetTitle(lg("Menus Manage")).
 		SetDescription(lg("Menus Manage")).
 		SetDeleteFn(func(idArr []string) error {
@@ -545,7 +545,7 @@ func GetMenuTable() (MenuTable Table) {
 				}
 
 				deleteMenusErr := connection().WithTx(tx).
-					Table("goadmin_menu").
+					Table("adm_menu").
 					WhereIn("id", ids).
 					Delete()
 
@@ -569,7 +569,7 @@ func GetMenuTable() (MenuTable Table) {
 		})
 	}
 
-	parentsModel, _ := table("goadmin_menu").
+	parentsModel, _ := table("adm_menu").
 		Select("id", "title").
 		Where("id", ">", 0).
 		OrderBy("order", "asc").
@@ -590,7 +590,7 @@ func GetMenuTable() (MenuTable Table) {
 	formList.AddField("ID", "id", db.Int, form.Default).FieldNotAllowEdit().FieldNotAllowAdd()
 	formList.AddField(lg("parent"), "parent_id", db.Int, form.SelectSingle).
 		FieldOptions(parents).FieldDisplay(func(model types.FieldModel) interface{} {
-		menuModel, _ := table("goadmin_menu").Select("parent_id").Find(model.ID)
+		menuModel, _ := table("adm_menu").Select("parent_id").Find(model.ID)
 
 		var menuItem []string
 		menuItem = append(menuItem, strconv.FormatInt(menuModel["parent_id"].(int64), 10))
@@ -616,7 +616,7 @@ func GetMenuTable() (MenuTable Table) {
 	formList.AddField(lg("updatedAt"), "updated_at", db.Timestamp, form.Default).FieldNotAllowAdd()
 	formList.AddField(lg("createdAt"), "created_at", db.Timestamp, form.Default).FieldNotAllowAdd()
 
-	formList.SetTable("goadmin_menu").
+	formList.SetTable("adm_menu").
 		SetTitle(lg("Menus Manage")).
 		SetDescription(lg("Menus Manage"))
 
