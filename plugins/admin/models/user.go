@@ -28,13 +28,13 @@ type UserModel struct {
 
 // User return a default user model.
 func User() UserModel {
-	return UserModel{Base: Base{TableName: "goadmin_users"}}
+	return UserModel{Base: Base{TableName: "adm_users"}}
 }
 
 // UserWithId return a default user model of given id.
 func UserWithId(id string) UserModel {
 	idInt, _ := strconv.Atoi(id)
-	return UserModel{Base: Base{TableName: "goadmin_users"}, Id: int64(idInt)}
+	return UserModel{Base: Base{TableName: "adm_users"}, Id: int64(idInt)}
 }
 
 func (t UserModel) SetConn(con db.Connection) UserModel {
@@ -87,11 +87,11 @@ func (t UserModel) UpdateAvatar(avatar string) {
 
 // WithRoles query the role info of the user.
 func (t UserModel) WithRoles() UserModel {
-	roleModel, _ := t.Table("goadmin_role_users").
-		LeftJoin("goadmin_roles", "goadmin_roles.id", "=", "goadmin_role_users.role_id").
+	roleModel, _ := t.Table("adm_role_users").
+		LeftJoin("adm_roles", "adm_roles.id", "=", "adm_role_users.role_id").
 		Where("user_id", "=", t.Id).
-		Select("goadmin_roles.id", "goadmin_roles.name", "goadmin_roles.slug",
-			"goadmin_roles.created_at", "goadmin_roles.updated_at").
+		Select("adm_roles.id", "adm_roles.name", "adm_roles.slug",
+			"adm_roles.created_at", "adm_roles.updated_at").
 		All()
 
 	for _, role := range roleModel {
@@ -125,20 +125,20 @@ func (t UserModel) WithPermissions() UserModel {
 	roleIds := t.GetAllRoleId()
 
 	if len(roleIds) > 0 {
-		permissions, _ = t.Table("goadmin_role_permissions").
-			LeftJoin("goadmin_permissions", "goadmin_permissions.id", "=", "goadmin_role_permissions.permission_id").
+		permissions, _ = t.Table("adm_role_permissions").
+			LeftJoin("adm_permissions", "adm_permissions.id", "=", "adm_role_permissions.permission_id").
 			WhereIn("role_id", roleIds).
-			Select("goadmin_permissions.http_method", "goadmin_permissions.http_path",
-				"goadmin_permissions.id", "goadmin_permissions.name", "goadmin_permissions.slug",
-				"goadmin_permissions.created_at", "goadmin_permissions.updated_at").
+			Select("adm_permissions.http_method", "adm_permissions.http_path",
+				"adm_permissions.id", "adm_permissions.name", "adm_permissions.slug",
+				"adm_permissions.created_at", "adm_permissions.updated_at").
 			All()
 	}
 
-	userPermissions, _ := t.Table("goadmin_user_permissions").
-		LeftJoin("goadmin_permissions", "goadmin_permissions.id", "=", "goadmin_user_permissions.permission_id").
+	userPermissions, _ := t.Table("adm_user_permissions").
+		LeftJoin("adm_permissions", "adm_permissions.id", "=", "adm_user_permissions.permission_id").
 		Where("user_id", "=", t.Id).
-		Select("goadmin_permissions.http_method", "goadmin_permissions.http_path",
-			"goadmin_permissions.id", "goadmin_permissions.name", "goadmin_permissions.slug",
+		Select("adm_permissions.http_method", "adm_permissions.http_path",
+			"adm_permissions.id", "adm_permissions.name", "goadmin_permissions.slug",
 			"goadmin_permissions.created_at", "goadmin_permissions.updated_at").
 		All()
 

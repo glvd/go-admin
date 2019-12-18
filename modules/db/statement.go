@@ -521,10 +521,10 @@ func (sql *SQL) Insert(values dialect.H) (int64, error) {
 	)
 
 	if sql.diver.Name() == DriverPostgresql {
-		if sql.TableName == "goadmin_menu" ||
-			sql.TableName == "goadmin_permissions" ||
-			sql.TableName == "goadmin_roles" ||
-			sql.TableName == "goadmin_users" {
+		if sql.TableName == "adm_menu" ||
+			sql.TableName == "adm_permissions" ||
+			sql.TableName == "adm_roles" ||
+			sql.TableName == "adm_users" {
 
 			if sql.tx != nil {
 				resMap, err = sql.diver.QueryWithTx(sql.tx, sql.Statement+" RETURNING id", sql.Args...)

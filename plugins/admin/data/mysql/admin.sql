@@ -20,12 +20,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table goadmin_menu
+# Dump of table adm_menu
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `goadmin_menu`;
+DROP TABLE IF EXISTS `adm_menu`;
 
-CREATE TABLE `goadmin_menu` (
+CREATE TABLE `adm_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) unsigned NOT NULL DEFAULT '0',
   `type` tinyint(4) unsigned NOT NULL DEFAULT '0',
@@ -39,10 +39,10 @@ CREATE TABLE `goadmin_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `goadmin_menu` WRITE;
-/*!40000 ALTER TABLE `goadmin_menu` DISABLE KEYS */;
+LOCK TABLES `adm_menu` WRITE;
+/*!40000 ALTER TABLE `adm_menu` DISABLE KEYS */;
 
-INSERT INTO `goadmin_menu` (`id`, `parent_id`, `type`, `order`, `title`, `icon`, `uri`, `header`, `created_at`, `updated_at`)
+INSERT INTO `adm_menu` (`id`, `parent_id`, `type`, `order`, `title`, `icon`, `uri`, `header`, `created_at`, `updated_at`)
 VALUES
 	(1,0,1,2,'Admin','fa-tasks','',NULL,'2019-09-10 00:00:00','2019-09-10 00:00:00'),
 	(2,1,1,2,'Users','fa-users','/info/manager',NULL,'2019-09-10 00:00:00','2019-09-10 00:00:00'),
@@ -52,16 +52,16 @@ VALUES
 	(6,1,1,6,'Operation log','fa-history','/info/op',NULL,'2019-09-10 00:00:00','2019-09-10 00:00:00'),
 	(7,0,1,1,'Dashboard','fa-bar-chart','/',NULL,'2019-09-10 00:00:00','2019-09-10 00:00:00');
 
-/*!40000 ALTER TABLE `goadmin_menu` ENABLE KEYS */;
+/*!40000 ALTER TABLE `adm_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table goadmin_operation_log
+# Dump of table adm_operation_log
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `goadmin_operation_log`;
+DROP TABLE IF EXISTS `adm_operation_log`;
 
-CREATE TABLE `goadmin_operation_log` (
+CREATE TABLE `adm_operation_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -76,12 +76,12 @@ CREATE TABLE `goadmin_operation_log` (
 
 
 
-# Dump of table goadmin_permissions
+# Dump of table adm_permissions
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `goadmin_permissions`;
+DROP TABLE IF EXISTS `adm_permissions`;
 
-CREATE TABLE `goadmin_permissions` (
+CREATE TABLE `adm_permissions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -93,24 +93,24 @@ CREATE TABLE `goadmin_permissions` (
   UNIQUE KEY `admin_permissions_name_unique` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `goadmin_permissions` WRITE;
-/*!40000 ALTER TABLE `goadmin_permissions` DISABLE KEYS */;
+LOCK TABLES `adm_permissions` WRITE;
+/*!40000 ALTER TABLE `adm_permissions` DISABLE KEYS */;
 
-INSERT INTO `goadmin_permissions` (`id`, `name`, `slug`, `http_method`, `http_path`, `created_at`, `updated_at`)
+INSERT INTO `adm_permissions` (`id`, `name`, `slug`, `http_method`, `http_path`, `created_at`, `updated_at`)
 VALUES
 	(1,'All permission','*','','*','2019-09-10 00:00:00','2019-09-10 00:00:00'),
 	(2,'Dashboard','dashboard','GET,PUT,POST,DELETE','/','2019-09-10 00:00:00','2019-09-10 00:00:00');
 
-/*!40000 ALTER TABLE `goadmin_permissions` ENABLE KEYS */;
+/*!40000 ALTER TABLE `adm_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table goadmin_role_menu
+# Dump of table adm_role_menu
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `goadmin_role_menu`;
+DROP TABLE IF EXISTS `adm_role_menu`;
 
-CREATE TABLE `goadmin_role_menu` (
+CREATE TABLE `adm_role_menu` (
   `role_id` int(11) unsigned NOT NULL,
   `menu_id` int(11) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -118,10 +118,10 @@ CREATE TABLE `goadmin_role_menu` (
   KEY `admin_role_menu_role_id_menu_id_index` (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `goadmin_role_menu` WRITE;
-/*!40000 ALTER TABLE `goadmin_role_menu` DISABLE KEYS */;
+LOCK TABLES `adm_role_menu` WRITE;
+/*!40000 ALTER TABLE `adm_role_menu` DISABLE KEYS */;
 
-INSERT INTO `goadmin_role_menu` (`role_id`, `menu_id`, `created_at`, `updated_at`)
+INSERT INTO `adm_role_menu` (`role_id`, `menu_id`, `created_at`, `updated_at`)
 VALUES
 	(1,1,'2019-09-10 00:00:00','2019-09-10 00:00:00'),
 	(1,7,'2019-09-10 00:00:00','2019-09-10 00:00:00'),
@@ -129,16 +129,16 @@ VALUES
 	(1,8,'2019-09-11 10:20:55','2019-09-11 10:20:55'),
 	(2,8,'2019-09-11 10:20:55','2019-09-11 10:20:55');
 
-/*!40000 ALTER TABLE `goadmin_role_menu` ENABLE KEYS */;
+/*!40000 ALTER TABLE `adm_role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table goadmin_role_permissions
+# Dump of table adm_role_permissions
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `goadmin_role_permissions`;
+DROP TABLE IF EXISTS `adm_role_permissions`;
 
-CREATE TABLE `goadmin_role_permissions` (
+CREATE TABLE `adm_role_permissions` (
   `role_id` int(11) unsigned NOT NULL,
   `permission_id` int(11) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -146,25 +146,25 @@ CREATE TABLE `goadmin_role_permissions` (
   UNIQUE KEY `admin_role_permissions` (`role_id`,`permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `goadmin_role_permissions` WRITE;
-/*!40000 ALTER TABLE `goadmin_role_permissions` DISABLE KEYS */;
+LOCK TABLES `adm_role_permissions` WRITE;
+/*!40000 ALTER TABLE `adm_role_permissions` DISABLE KEYS */;
 
-INSERT INTO `goadmin_role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`)
+INSERT INTO `adm_role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`)
 VALUES
 	(1,1,'2019-09-10 00:00:00','2019-09-10 00:00:00'),
 	(1,2,'2019-09-10 00:00:00','2019-09-10 00:00:00'),
 	(2,2,'2019-09-10 00:00:00','2019-09-10 00:00:00');
 
-/*!40000 ALTER TABLE `goadmin_role_permissions` ENABLE KEYS */;
+/*!40000 ALTER TABLE `adm_role_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table goadmin_role_users
+# Dump of table adm_role_users
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `goadmin_role_users`;
+DROP TABLE IF EXISTS `adm_role_users`;
 
-CREATE TABLE `goadmin_role_users` (
+CREATE TABLE `adm_role_users` (
   `role_id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,

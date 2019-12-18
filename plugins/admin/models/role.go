@@ -19,13 +19,13 @@ type RoleModel struct {
 
 // Role return a default role model.
 func Role() RoleModel {
-	return RoleModel{Base: Base{TableName: "goadmin_roles"}}
+	return RoleModel{Base: Base{TableName: "adm_roles"}}
 }
 
 // RoleWithId return a default role model of given id.
 func RoleWithId(id string) RoleModel {
 	idInt, _ := strconv.Atoi(id)
-	return RoleModel{Base: Base{TableName: "goadmin_roles"}, Id: int64(idInt)}
+	return RoleModel{Base: Base{TableName: "adm_roles"}, Id: int64(idInt)}
 }
 
 func (t RoleModel) SetConn(con db.Connection) RoleModel {
@@ -85,7 +85,7 @@ func (t RoleModel) Update(name, slug string) RoleModel {
 
 // CheckPermission check the permission of role.
 func (t RoleModel) CheckPermission(permissionId string) bool {
-	checkPermission, _ := t.Table("goadmin_role_permissions").
+	checkPermission, _ := t.Table("adm_role_permissions").
 		Where("permission_id", "=", permissionId).
 		Where("role_id", "=", t.Id).
 		First()

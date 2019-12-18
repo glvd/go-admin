@@ -111,7 +111,7 @@ func GetGlobalMenu(user models.UserModel) *Menu {
 	user.WithRoles().WithMenus()
 
 	if user.IsSuperAdmin() {
-		menus, _ = db.Table("goadmin_menu").
+		menus, _ = db.Table("adm_menu").
 			Where("id", ">", 0).
 			OrderBy("order", "asc").
 			All()
@@ -122,7 +122,7 @@ func GetGlobalMenu(user models.UserModel) *Menu {
 			ids = append(ids, user.MenuIds[i])
 		}
 
-		menus, _ = db.Table("goadmin_menu").
+		menus, _ = db.Table("adm_menu").
 			WhereIn("id", ids).
 			OrderBy("order", "asc").
 			All()
