@@ -536,7 +536,7 @@ func GetMenuTable() (MenuTable Table) {
 			_, txErr := connection().WithTransaction(func(tx *sql.Tx) (e error, i map[string]interface{}) {
 
 				deleteRoleMenuErr := connection().WithTx(tx).
-					Table("goadmin_role_menu").
+					Table("adm_role_menu").
 					WhereIn("menu_id", ids).
 					Delete()
 
@@ -602,7 +602,7 @@ func GetMenuTable() (MenuTable Table) {
 	formList.AddField(lg("uri"), "uri", db.Varchar, form.Text)
 	formList.AddField(lg("role"), "roles", db.Int, form.Select).
 		FieldOptions(roles).FieldDisplay(func(model types.FieldModel) interface{} {
-		roleModel, _ := table("goadmin_role_menu").
+		roleModel, _ := table("adm_role_menu").
 			Select("role_id").
 			Where("menu_id", "=", model.ID).
 			All()

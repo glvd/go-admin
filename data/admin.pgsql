@@ -231,10 +231,10 @@ CREATE TABLE public.adm_session (
 ALTER TABLE public.adm_session OWNER TO postgres;
 
 --
--- Name: goadmin_user_permissions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_user_permissions; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_user_permissions (
+CREATE TABLE public.adm_user_permissions (
     user_id integer NOT NULL,
     permission_id integer NOT NULL,
     created_at timestamp without time zone DEFAULT now(),
@@ -242,13 +242,13 @@ CREATE TABLE public.goadmin_user_permissions (
 );
 
 
-ALTER TABLE public.goadmin_user_permissions OWNER TO postgres;
+ALTER TABLE public.adm_user_permissions OWNER TO postgres;
 
 --
--- Name: goadmin_users_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: adm_users_myid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.goadmin_users_myid_seq
+CREATE SEQUENCE public.adm_users_myid_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -256,14 +256,14 @@ CREATE SEQUENCE public.goadmin_users_myid_seq
     CACHE 1;
 
 
-ALTER TABLE public.goadmin_users_myid_seq OWNER TO postgres;
+ALTER TABLE public.adm_users_myid_seq OWNER TO postgres;
 
 --
--- Name: goadmin_users; Type: TABLE; Schema: public; Owner: postgres
+-- Name: adm_users; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.goadmin_users (
-    id integer DEFAULT nextval('public.goadmin_users_myid_seq'::regclass) NOT NULL,
+CREATE TABLE public.adm_users (
+    id integer DEFAULT nextval('public.adm_users_myid_seq'::regclass) NOT NULL,
     username character varying(190) NOT NULL,
     password character varying(80) NOT NULL,
     name character varying(255) NOT NULL,
@@ -274,7 +274,7 @@ CREATE TABLE public.goadmin_users (
 );
 
 
-ALTER TABLE public.goadmin_users OWNER TO postgres;
+ALTER TABLE public.adm_users OWNER TO postgres;
 
 --
 -- Data for Name: adm_menu; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -292,28 +292,28 @@ COPY public.adm_menu (id, parent_id, type, "order", title, header, icon, uri, cr
 
 
 --
--- Data for Name: goadmin_operation_log; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_operation_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_operation_log (id, user_id, path, method, ip, input, created_at, updated_at) FROM stdin;
+COPY public.adm_operation_log (id, user_id, path, method, ip, input, created_at, updated_at) FROM stdin;
 \.
 
 
 --
--- Data for Name: goadmin_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_permissions (id, name, slug, http_method, http_path, created_at, updated_at) FROM stdin;
+COPY public.adm_permissions (id, name, slug, http_method, http_path, created_at, updated_at) FROM stdin;
 1	All permission	*		*	2019-09-10 00:00:00	2019-09-10 00:00:00
 2	Dashboard	dashboard	GET,PUT,POST,DELETE	/	2019-09-10 00:00:00	2019-09-10 00:00:00
 \.
 
 
 --
--- Data for Name: goadmin_role_menu; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_role_menu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_role_menu (role_id, menu_id, created_at, updated_at) FROM stdin;
+COPY public.adm_role_menu (role_id, menu_id, created_at, updated_at) FROM stdin;
 1	1	2019-09-10 00:00:00	2019-09-10 00:00:00
 1	7	2019-09-10 00:00:00	2019-09-10 00:00:00
 2	7	2019-09-10 00:00:00	2019-09-10 00:00:00
@@ -321,10 +321,10 @@ COPY public.goadmin_role_menu (role_id, menu_id, created_at, updated_at) FROM st
 
 
 --
--- Data for Name: goadmin_role_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_role_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_role_permissions (role_id, permission_id, created_at, updated_at) FROM stdin;
+COPY public.adm_role_permissions (role_id, permission_id, created_at, updated_at) FROM stdin;
 1	1	2019-09-10 00:00:00	2019-09-10 00:00:00
 1	2	2019-09-10 00:00:00	2019-09-10 00:00:00
 2	2	2019-09-10 00:00:00	2019-09-10 00:00:00
@@ -348,38 +348,38 @@ COPY public.goadmin_role_permissions (role_id, permission_id, created_at, update
 
 
 --
--- Data for Name: goadmin_role_users; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_role_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_role_users (role_id, user_id, created_at, updated_at) FROM stdin;
+COPY public.adm_role_users (role_id, user_id, created_at, updated_at) FROM stdin;
 1	1	2019-09-10 00:00:00	2019-09-10 00:00:00
 2	2	2019-09-10 00:00:00	2019-09-10 00:00:00
 \.
 
 
 --
--- Data for Name: goadmin_roles; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_roles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_roles (id, name, slug, created_at, updated_at) FROM stdin;
+COPY public.adm_roles (id, name, slug, created_at, updated_at) FROM stdin;
 1	Administrator	administrator	2019-09-10 00:00:00	2019-09-10 00:00:00
 2	Operator	operator	2019-09-10 00:00:00	2019-09-10 00:00:00
 \.
 
 
 --
--- Data for Name: goadmin_session; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_session; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_session (id, sid, "values", created_at, updated_at) FROM stdin;
+COPY public.adm_session (id, sid, "values", created_at, updated_at) FROM stdin;
 \.
 
 
 --
--- Data for Name: goadmin_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_user_permissions (user_id, permission_id, created_at, updated_at) FROM stdin;
+COPY public.adm_user_permissions (user_id, permission_id, created_at, updated_at) FROM stdin;
 1	1	2019-09-10 00:00:00	2019-09-10 00:00:00
 2	2	2019-09-10 00:00:00	2019-09-10 00:00:00
 0	1	\N	\N
@@ -402,10 +402,10 @@ COPY public.goadmin_user_permissions (user_id, permission_id, created_at, update
 
 
 --
--- Data for Name: goadmin_users; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: adm_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.goadmin_users (id, username, password, name, avatar, remember_token, created_at, updated_at) FROM stdin;
+COPY public.adm_users (id, username, password, name, avatar, remember_token, created_at, updated_at) FROM stdin;
 1	admin	$2a$10$OxWYJJGTP2gi00l2x06QuOWqw5VR47MQCJ0vNKnbMYfrutij10Hwe	admin		tlNcBVK9AvfYH7WEnwB1RKvocJu8FfRy4um3DJtwdHuJy0dwFsLOgAc0xUfh	2019-09-10 00:00:00	2019-09-10 00:00:00
 2	operator	$2a$10$rVqkOzHjN2MdlEprRflb1eGP0oZXuSrbJLOmJagFsCd81YZm0bsh.	Operator		\N	2019-09-10 00:00:00	2019-09-10 00:00:00
 \.
@@ -419,38 +419,38 @@ SELECT pg_catalog.setval('public.adm_menu_myid_seq', 7, true);
 
 
 --
--- Name: goadmin_operation_log_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: adm_operation_log_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.goadmin_operation_log_myid_seq', 0, true);
-
-
---
--- Name: goadmin_permissions_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.goadmin_permissions_myid_seq', 2, true);
+SELECT pg_catalog.setval('public.adm_operation_log_myid_seq', 0, true);
 
 
 --
--- Name: goadmin_roles_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: adm_permissions_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.goadmin_roles_myid_seq', 2, true);
-
-
---
--- Name: goadmin_session_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.goadmin_session_myid_seq', 0, true);
+SELECT pg_catalog.setval('public.adm_permissions_myid_seq', 2, true);
 
 
 --
--- Name: goadmin_users_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: adm_roles_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.goadmin_users_myid_seq', 2, true);
+SELECT pg_catalog.setval('public.adm_roles_myid_seq', 2, true);
+
+
+--
+-- Name: adm_session_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.adm_session_myid_seq', 0, true);
+
+
+--
+-- Name: adm_users_myid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.adm_users_myid_seq', 2, true);
 
 
 --
@@ -462,43 +462,43 @@ ALTER TABLE ONLY public.adm_menu
 
 
 --
--- Name: goadmin_operation_log goadmin_operation_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: adm_operation_log adm_operation_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.goadmin_operation_log
-    ADD CONSTRAINT goadmin_operation_log_pkey PRIMARY KEY (id);
-
-
---
--- Name: goadmin_permissions goadmin_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.goadmin_permissions
-    ADD CONSTRAINT goadmin_permissions_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.adm_operation_log
+    ADD CONSTRAINT adm_operation_log_pkey PRIMARY KEY (id);
 
 
 --
--- Name: goadmin_roles goadmin_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: adm_permissions adm_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.goadmin_roles
-    ADD CONSTRAINT goadmin_roles_pkey PRIMARY KEY (id);
-
-
---
--- Name: goadmin_session goadmin_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.goadmin_session
-    ADD CONSTRAINT goadmin_session_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.adm_permissions
+    ADD CONSTRAINT adm_permissions_pkey PRIMARY KEY (id);
 
 
 --
--- Name: goadmin_users goadmin_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: adm_roles adm_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.goadmin_users
-    ADD CONSTRAINT goadmin_users_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.adm_roles
+    ADD CONSTRAINT adm_roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: adm_session adm_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.adm_session
+    ADD CONSTRAINT adm_session_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: adm_users adm_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.adm_users
+    ADD CONSTRAINT adm_users_pkey PRIMARY KEY (id);
 
 
 --
