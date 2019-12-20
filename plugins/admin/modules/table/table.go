@@ -760,6 +760,13 @@ func (tb DefaultTable) UpdateDataFromDatabase(dataList form.Values) error {
 		return tb.form.UpdateFn(dataList)
 	}
 
+	if tb.form.BeforeUpdate != nil {
+		err := tb.form.BeforeUpdate(dataList)
+		if err != nil {
+			return err
+		}
+	}
+
 	_, err := tb.sql().Table(tb.form.Table).
 		Where(tb.primaryKey.Name, "=", dataList.Get(tb.primaryKey.Name)).
 		Update(tb.getInjectValueFromFormValue(dataList))
@@ -806,6 +813,13 @@ func (tb DefaultTable) InsertDataFromDatabase(dataList form.Values) error {
 
 	if tb.form.InsertFn != nil {
 		return tb.form.InsertFn(dataList)
+	}
+
+	if tb.form.BeforeInsert != nil {
+		err := tb.form.BeforeInsert(dataList)
+		if err != nil {
+			return err
+		}
 	}
 
 	id, err := tb.sql().Table(tb.form.Table).Insert(tb.getInjectValueFromFormValue(dataList))
