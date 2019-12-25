@@ -226,9 +226,9 @@ func GetNormalManagerTable() (ManagerTable Table) {
 	info.AddField(lg("Nickname"), "name", db.Varchar).FieldFilterable()
 	info.AddField(lg("role"), "roles", db.Varchar).
 		FieldDisplay(func(model types.FieldModel) interface{} {
-			labelModels, _ := table("goadmin_role_users").
-				Select("goadmin_roles.name").
-				LeftJoin("goadmin_roles", "goadmin_roles.id", "=", "goadmin_role_users.role_id").
+			labelModels, _ := table("adm_role_users").
+				Select("adm_roles.name").
+				LeftJoin("adm_roles", "adm_roles.id", "=", "adm_role_users.role_id").
 				Where("user_id", "=", model.ID).
 				All()
 
@@ -252,7 +252,7 @@ func GetNormalManagerTable() (ManagerTable Table) {
 	info.AddField(lg("createdAt"), "created_at", db.Timestamp)
 	info.AddField(lg("updatedAt"), "updated_at", db.Timestamp)
 
-	info.SetTable("goadmin_users").
+	info.SetTable("adm_users").
 		SetTitle(lg("Managers")).
 		SetDescription(lg("Managers")).
 		SetDeleteFn(func(idArr []string) error {
@@ -262,7 +262,7 @@ func GetNormalManagerTable() (ManagerTable Table) {
 			_, txErr := connection().WithTransaction(func(tx *sql.Tx) (e error, i map[string]interface{}) {
 
 				deleteUserRoleErr := connection().WithTx(tx).
-					Table("goadmin_role_users").
+					Table("adm_role_users").
 					WhereIn("user_id", ids).
 					Delete()
 
@@ -271,7 +271,7 @@ func GetNormalManagerTable() (ManagerTable Table) {
 				}
 
 				deleteUserPermissionErr := connection().WithTx(tx).
-					Table("goadmin_user_permissions").
+					Table("adm_user_permissions").
 					WhereIn("user_id", ids).
 					Delete()
 
@@ -280,7 +280,7 @@ func GetNormalManagerTable() (ManagerTable Table) {
 				}
 
 				deleteUserErr := connection().WithTx(tx).
-					Table("goadmin_users").
+					Table("adm_users").
 					WhereIn("id", ids).
 					Delete()
 
@@ -295,7 +295,7 @@ func GetNormalManagerTable() (ManagerTable Table) {
 		})
 
 	var roles, permissions []map[string]string
-	rolesModel, _ := table("goadmin_roles").Select("id", "slug").All()
+	rolesModel, _ := table("adm_roles").Select("id", "slug").All()
 
 	for _, v := range rolesModel {
 		roles = append(roles, map[string]string{
@@ -303,7 +303,7 @@ func GetNormalManagerTable() (ManagerTable Table) {
 			"value": strconv.FormatInt(v["id"].(int64), 10),
 		})
 	}
-	permissionsModel, _ := table("goadmin_permissions").Select("id", "slug").All()
+	permissionsModel, _ := table("adm_permissions").Select("id", "slug").All()
 	for _, v := range permissionsModel {
 		permissions = append(permissions, map[string]string{
 			"field": v["slug"].(string),
@@ -326,7 +326,7 @@ func GetNormalManagerTable() (ManagerTable Table) {
 			return ""
 		})
 
-	formList.SetTable("goadmin_users").SetTitle(lg("Managers")).SetDescription(lg("Managers"))
+	formList.SetTable("adm_users").SetTitle(lg("Managers")).SetDescription(lg("Managers"))
 	formList.SetUpdateFn(func(values form2.Values) error {
 
 		if values.IsEmpty("name", "username") {
@@ -481,7 +481,7 @@ func GetPermissionTable() (PermissionTable Table) {
 	formList.AddField(lg("updatedAt"), "updated_at", db.Timestamp, form.Default).FieldNotAllowAdd()
 	formList.AddField(lg("createdAt"), "created_at", db.Timestamp, form.Default).FieldNotAllowAdd()
 
-	formList.SetTable("goadmin_permissions").
+	formList.SetTable("adm_permissions").
 		SetTitle(lg("Permission Manage")).
 		SetDescription(lg("Permission Manage")).
 		SetPostValidator(func(values form2.Values) error {
@@ -495,7 +495,7 @@ func GetPermissionTable() (PermissionTable Table) {
 			}
 			return nil
 		}).SetPostHook(func(values form2.Values) error {
-		_, err := connection().Table("goadmin_permissions").
+		_, err := connection().Table("adm_permissions").
 			Where("id", "=", values.Get("id")).Update(dialect.H{
 			"updated_at": time.Now().Format("2006-01-02 15:04:05"),
 		})
