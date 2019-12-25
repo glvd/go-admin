@@ -3,10 +3,12 @@ package table
 import (
 	"errors"
 	"fmt"
+	"github.com/glvd/go-admin/modules/language"
 	"github.com/glvd/go-admin/modules/service"
 	"html/template"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/glvd/go-admin/modules/db"
 	"github.com/glvd/go-admin/modules/db/dialect"
@@ -287,16 +289,12 @@ func (tb DefaultTable) GetDataFromDatabaseWithIds(path string, params parameter.
 	return tb.getDataFromDatabase(path, params, ids)
 }
 
-func (tb DefaultTable) getTempModelData(res map[string]interface{}, resNext map[string]interface{}, params parameter.Parameters,
-	columns Columns, isLast bool) (map[string]template.HTML, bool) {
+func (tb DefaultTable) getTempModelData(res map[string]interface{}, params parameter.Parameters, columns Columns) map[string]template.HTML {
 
 	tempModelData := make(map[string]template.HTML)
 	headField := ""
 
 	primaryKeyValue := db.GetValueFromDatabaseType(tb.primaryKey.Type, res[tb.primaryKey.Name])
-
-	// check if is join query result, which
-	isCombine := !isLast && res[tb.primaryKey.Name] == resNext[tb.primaryKey.Name]
 
 	for _, field := range tb.info.FieldList {
 
@@ -313,21 +311,13 @@ func (tb DefaultTable) getTempModelData(res map[string]interface{}, resNext map[
 			continue
 		}
 
-		var combineValue = ""
+		typeName := field.TypeName
 
-		if isCombine {
-			var (
-				resValue     = db.GetValueFromDatabaseType(field.TypeName, res[headField]).String()
-				resNextValue = db.GetValueFromDatabaseType(field.TypeName, resNext[headField]).String()
-			)
-			if resValue == resNextValue {
-				combineValue = resValue
-			} else {
-				combineValue = resValue + "|" + resNextValue
-			}
-		} else {
-			combineValue = db.GetValueFromDatabaseType(field.TypeName, res[headField]).String()
+		if field.Join.Valid() {
+			typeName = db.Varchar
 		}
+
+		var combineValue = db.GetValueFromDatabaseType(typeName, res[headField]).String()
 
 		var value interface{}
 		if inArray(columns, headField) || field.Join.Valid() {
@@ -351,7 +341,7 @@ func (tb DefaultTable) getTempModelData(res map[string]interface{}, resNext map[
 	}
 
 	tempModelData[tb.primaryKey.Name] = template.HTML(primaryKeyValue.String())
-	return tempModelData, isCombine
+	return tempModelData
 }
 
 func (tb DefaultTable) getAllDataFromDatabase(path string, params parameter.Parameters) (PanelInfo, error) {
@@ -423,23 +413,7 @@ func (tb DefaultTable) getAllDataFromDatabase(path string, params parameter.Para
 	infoList := make([]map[string]template.HTML, 0)
 
 	for i := 0; i < len(res); i++ {
-
-		rexNext := make(map[string]interface{})
-		if i != len(res)-1 {
-			rexNext = res[i+1]
-		}
-
-		tempModelData, isCombine := tb.getTempModelData(res[i], rexNext, params, columns, i == len(res)-1)
-
-		if isCombine {
-			if i != len(res)-2 {
-				res = append(res[:i+1], res[i+2:]...)
-			} else {
-				res = res[:i+1]
-			}
-		}
-
-		infoList = append(infoList, tempModelData)
+		infoList = append(infoList, tb.getTempModelData(res[i], params, columns))
 	}
 
 	return PanelInfo{
@@ -459,11 +433,13 @@ func (tb DefaultTable) getDataFromDatabase(path string, params parameter.Paramet
 		countStatement string
 	)
 
+	beginTime := time.Now()
+
 	if len(ids) > 0 {
-		queryStatement = "select %s from %s %s where " + tb.primaryKey.Name + " in (%s) order by " + placeholder + " %s"
+		queryStatement = "select %s from %s %s where " + tb.primaryKey.Name + " in (%s) %s order by " + placeholder + " %s"
 		countStatement = "select count(*) from " + placeholder + " where " + tb.primaryKey.Name + " in (%s)"
 	} else {
-		queryStatement = "select %s from " + placeholder + "%s %s order by " + placeholder + " %s LIMIT ? OFFSET ?"
+		queryStatement = "select %s from " + placeholder + "%s %s %s order by " + placeholder + " %s LIMIT ? OFFSET ?"
 		countStatement = "select count(*) from " + placeholder + "%s"
 	}
 
@@ -482,6 +458,7 @@ func (tb DefaultTable) getDataFromDatabase(path string, params parameter.Paramet
 		headField  string
 		joinTables = make([]string, 0)
 		filterForm = make([]types.FormField, 0)
+		hasJoin    = false
 	)
 	for _, field := range tb.info.FieldList {
 		if field.Field != tb.primaryKey.Name && inArray(columns, field.Field) &&
@@ -492,8 +469,10 @@ func (tb DefaultTable) getDataFromDatabase(path string, params parameter.Paramet
 		headField = field.Field
 
 		if field.Join.Valid() {
+			hasJoin = true
 			headField = field.Join.Table + "_" + field.Field
-			fields += field.Join.Table + "." + filterFiled(field.Field, connection.GetDelimiter()) + " as " + headField + ","
+			fields += getAggregationExpression(tb.connectionDriver, field.Join.Table+"."+
+				filterFiled(field.Field, connection.GetDelimiter()), headField, types.JoinFieldValueDelimiter) + ","
 			if !modules.InArray(joinTables, field.Join.Table) {
 				joinTables = append(joinTables, field.Join.Table)
 				joins += " left join " + filterFiled(field.Join.Table, connection.GetDelimiter()) + " on " +
@@ -570,6 +549,7 @@ func (tb DefaultTable) getDataFromDatabase(path string, params parameter.Paramet
 		wheres    = ""
 		whereArgs = make([]interface{}, 0)
 		args      = make([]interface{}, 0)
+		existKeys = make([]string, 0)
 	)
 
 	if len(ids) > 0 {
@@ -580,11 +560,18 @@ func (tb DefaultTable) getDataFromDatabase(path string, params parameter.Paramet
 		}
 		wheres = wheres[:len(wheres)-1]
 	} else {
-		wheres = " where "
-		if len(params.Fields) == 0 {
+
+		if len(params.Fields) == 0 && len(tb.info.Wheres) == 0 {
 			wheres = ""
 		} else {
+
+			wheres = " where "
+
 			for key, value := range params.Fields {
+
+				if modules.InArray(existKeys, key) {
+					continue
+				}
 
 				var op types.FilterOperator
 				if strings.Contains(key, "_end__goadmin") {
@@ -614,15 +601,42 @@ func (tb DefaultTable) getDataFromDatabase(path string, params parameter.Paramet
 						whereArgs = append(whereArgs, value)
 					}
 				}
+
+				existKeys = append(existKeys, key)
 			}
+
+			for _, wh := range tb.info.Wheres {
+
+				if modules.InArray(existKeys, wh.Field) {
+					continue
+				}
+
+				// TODO: support like operation and join table
+				if inArray(columns, wh.Field) {
+					wheres += filterFiled(wh.Field, connection.GetDelimiter()) + " " + wh.Operator + " ? and "
+					whereArgs = append(whereArgs, wh.Arg)
+				}
+
+				existKeys = append(existKeys, wh.Field)
+			}
+
 			if wheres != " where " {
 				wheres = wheres[:len(wheres)-4]
+			} else {
+				wheres = ""
 			}
+
 		}
-		args = append(whereArgs, params.PageSize, (modules.GetPage(params.Page)-1)*10)
+		pageSize, _ := strconv.Atoi(params.PageSize)
+		args = append(whereArgs, params.PageSize, (modules.GetPage(params.Page)-1)*pageSize)
 	}
 
-	queryCmd := fmt.Sprintf(queryStatement, fields, tb.info.Table, joins, wheres, params.SortField, params.SortType)
+	groupBy := ""
+	if hasJoin {
+		groupBy = " GROUP BY " + tb.info.Table + "." + filterFiled(tb.GetPrimaryKey().Name, connection.GetDelimiter())
+	}
+
+	queryCmd := fmt.Sprintf(queryStatement, fields, tb.info.Table, joins, wheres, groupBy, params.SortField, params.SortType)
 
 	logger.LogSQL(queryCmd, args)
 
@@ -635,23 +649,7 @@ func (tb DefaultTable) getDataFromDatabase(path string, params parameter.Paramet
 	infoList := make([]map[string]template.HTML, 0)
 
 	for i := 0; i < len(res); i++ {
-
-		rexNext := make(map[string]interface{})
-		if i != len(res)-1 {
-			rexNext = res[i+1]
-		}
-
-		tempModelData, isCombine := tb.getTempModelData(res[i], rexNext, params, columns, i == len(res)-1)
-
-		if isCombine {
-			if i != len(res)-2 {
-				res = append(res[:i+1], res[i+2:]...)
-			} else {
-				res = res[:i+1]
-			}
-		}
-
-		infoList = append(infoList, tempModelData)
+		infoList = append(infoList, tb.getTempModelData(res[i], params, columns))
 	}
 
 	// TODO: use the dialect
@@ -673,10 +671,14 @@ func (tb DefaultTable) getDataFromDatabase(path string, params parameter.Paramet
 		size = int(total[0]["count(*)"].(int64))
 	}
 
+	endTime := time.Now()
+
 	return PanelInfo{
-		Thead:       thead,
-		InfoList:    infoList,
-		Paginator:   paginator.Get(path, params, size, tb.info.GetPageSizeList()),
+		Thead:    thead,
+		InfoList: infoList,
+		Paginator: paginator.Get(path, params, size, tb.info.GetPageSizeList()).
+			SetExtraInfo(template.HTML(fmt.Sprintf("<b>" + language.Get("query time") + ": </b>" +
+				fmt.Sprintf("%fs", endTime.Sub(beginTime).Seconds())))),
 		Title:       tb.info.Title,
 		FormData:    filterForm,
 		Description: tb.info.Description,
@@ -772,7 +774,7 @@ func (tb DefaultTable) UpdateDataFromDatabase(dataList form.Values) error {
 		Update(tb.getInjectValueFromFormValue(dataList))
 
 	// TODO: some errors should be ignored.
-	if err != nil {
+	if err != nil && !strings.Contains(err.Error(), "no affect") {
 		if tb.connectionDriver != db.DriverPostgresql {
 			return err
 		}
@@ -791,6 +793,8 @@ func (tb DefaultTable) UpdateDataFromDatabase(dataList form.Values) error {
 					logger.Error(err)
 				}
 			}()
+
+			dataList.Add("__go_admin_post_type", "0")
 
 			err := tb.form.PostHook(dataList)
 			if err != nil {
@@ -847,6 +851,8 @@ func (tb DefaultTable) InsertDataFromDatabase(dataList form.Values) error {
 				}
 			}()
 
+			dataList.Add("__go_admin_post_type", "1")
+
 			err := tb.form.PostHook(dataList)
 			if err != nil {
 				logger.Error(err)
@@ -867,6 +873,18 @@ func (tb DefaultTable) getInjectValueFromFormValue(dataList form.Values) dialect
 		fun          types.PostFieldFilterFn
 		exceptString = []string{tb.primaryKey.Name, "_previous_", "_method", "_t"}
 	)
+
+	if !dataList.IsSingleUpdatePost() {
+		for _, field := range tb.form.FieldList {
+			if field.FormType.IsSelect() {
+				if _, ok := dataList[field.Field+"[]"]; !ok {
+					dataList[field.Field+"[]"] = []string{""}
+				}
+			}
+		}
+	}
+	dataList = dataList.RemoveRemark()
+
 	for k, v := range dataList {
 		k = strings.Replace(k, "[]", "", -1)
 		if !modules.InArray(exceptString, k) {
@@ -1045,6 +1063,19 @@ func getColumns(columnsModel []map[string]interface{}, driver string) Columns {
 			columns[key] = string(model["name"].(string))
 		}
 		return columns
+	default:
+		panic("wrong driver")
+	}
+}
+
+func getAggregationExpression(driver, field, headField, delimiter string) string {
+	switch driver {
+	case "postgresql":
+		return fmt.Sprintf("string_agg(%s::character varying, '%s') as %s", field, delimiter, headField)
+	case "mysql":
+		return fmt.Sprintf("group_concat(%s separator '%s') as %s", field, delimiter, headField)
+	case "sqlite":
+		return fmt.Sprintf("group_concat(%s, '%s') as %s", field, delimiter, headField)
 	default:
 		panic("wrong driver")
 	}

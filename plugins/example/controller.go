@@ -388,5 +388,5 @@ func TestHandler(ctx *context.Context) {
 			Title:       "Dashboard",
 			Description: "dashboard example",
 		}, nil
-	})
+	}, db.GetConnection(services))
 }

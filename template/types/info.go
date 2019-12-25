@@ -325,6 +325,8 @@ func (j Join) Valid() bool {
 	return j.Table != "" && j.Field != "" && j.JoinField != ""
 }
 
+var JoinFieldValueDelimiter = utils.Uuid(8)
+
 type TabGroups [][]string
 
 func (t TabGroups) Valid() bool {
@@ -383,6 +385,8 @@ type InfoPanel struct {
 	IsHideFilterArea   bool
 	FilterFormLayout   form.Layout
 
+	Wheres []Where
+
 	Buttons Buttons
 
 	DeleteHook  DeleteFn
@@ -394,6 +398,12 @@ type InfoPanel struct {
 	Action     template.HTML
 	HeaderHtml template.HTML
 	FooterHtml template.HTML
+}
+
+type Where struct {
+	Field    string
+	Operator string
+	Arg      interface{}
 }
 
 type Action interface {
@@ -463,7 +473,13 @@ func NewInfoPanel() *InfoPanel {
 		DefaultPageSize:   DefaultPageSize,
 		processChains:     make(DisplayProcessFnChains, 0),
 		Buttons:           make(Buttons, 0),
+		Wheres:            make([]Where, 0),
 	}
+}
+
+func (i *InfoPanel) Where(field string, operator string, arg interface{}) *InfoPanel {
+	i.Wheres = append(i.Wheres, Where{Field: field, Operator: operator, Arg: arg})
+	return i
 }
 
 func (i *InfoPanel) AddButton(title template.HTML, icon string, action Action, color ...template.HTML) *InfoPanel {

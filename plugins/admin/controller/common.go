@@ -4,6 +4,7 @@ import (
 	"github.com/glvd/go-admin/context"
 	"github.com/glvd/go-admin/modules/auth"
 	c "github.com/glvd/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/db"
 	"github.com/glvd/go-admin/modules/language"
 	"github.com/glvd/go-admin/modules/service"
 	"github.com/glvd/go-admin/plugins/admin/modules/constant"
@@ -16,6 +17,7 @@ var (
 	config        c.Config
 	captchaConfig map[string]string
 	services      service.List
+	conn          db.Connection
 )
 
 // SetConfig set the config.
@@ -31,6 +33,7 @@ func SetConfig(cfg c.Config) {
 // SetServices set the services.
 func SetServices(l service.List) {
 	services = l
+	conn = db.GetConnection(services)
 }
 
 func authSrv() *auth.Service {

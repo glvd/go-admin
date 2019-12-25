@@ -4,6 +4,7 @@ import (
 	"github.com/glvd/go-admin/context"
 	"github.com/glvd/go-admin/modules/auth"
 	"github.com/glvd/go-admin/modules/config"
+	"github.com/glvd/go-admin/modules/db"
 	"github.com/glvd/go-admin/modules/language"
 	"github.com/glvd/go-admin/modules/menu"
 	"github.com/glvd/go-admin/plugins/admin/modules/constant"
@@ -35,7 +36,7 @@ func BadRequest(ctx *context.Context, msg string) {
 	})
 }
 
-func Alert(ctx *context.Context, config config.Config, desc, title, msg string) {
+func Alert(ctx *context.Context, config config.Config, desc, title, msg string, conn db.Connection) {
 	user := auth.Auth(ctx)
 
 	alert := template.Get(config.Theme).Alert().
@@ -49,7 +50,7 @@ func Alert(ctx *context.Context, config config.Config, desc, title, msg string) 
 		Content:     alert,
 		Description: desc,
 		Title:       title,
-	}, config, menu.GetGlobalMenu(user).SetActiveClass(config.URLRemovePrefix(ctx.Path())))
+	}, config, menu.GetGlobalMenu(user, conn).SetActiveClass(config.URLRemovePrefix(ctx.Path())))
 	ctx.HTML(http.StatusOK, buf.String())
 }
 

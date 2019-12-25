@@ -112,6 +112,7 @@ type DataTableAttribute interface {
 	SetIsTab(value bool) DataTableAttribute
 	SetButtons(btns template.HTML) DataTableAttribute
 	SetHideFilterArea(value bool) DataTableAttribute
+	SetHideRowSelector(value bool) DataTableAttribute
 	SetActionJs(aj template.JS) DataTableAttribute
 	SetInfoUrl(value string) DataTableAttribute
 	SetHasFilter(hasFilter bool) DataTableAttribute
@@ -142,6 +143,7 @@ type PaginatorAttribute interface {
 	SetNextUrl(value string) PaginatorAttribute
 	SetOption(value map[string]template.HTML) PaginatorAttribute
 	SetUrl(value string) PaginatorAttribute
+	SetExtraInfo(value template.HTML) PaginatorAttribute
 	GetContent() template.HTML
 }
 
