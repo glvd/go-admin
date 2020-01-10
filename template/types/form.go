@@ -103,6 +103,9 @@ type FormPanel struct {
 	Validator FormPostFn
 	PostHook  FormPostFn
 
+	BeforeInsert FormPostFn
+	BeforeUpdate FormPostFn
+
 	UpdateFn FormPostFn
 	InsertFn FormPostFn
 
@@ -345,11 +348,20 @@ func (f *FormPanel) SetPostHook(po FormPostFn) *FormPanel {
 	return f
 }
 
+func (f *FormPanel) SetBeforeUpdate(po FormPostFn) *FormPanel {
+	f.BeforeUpdate = po
+	return f
+}
+
 func (f *FormPanel) SetUpdateFn(po FormPostFn) *FormPanel {
 	f.UpdateFn = po
 	return f
 }
 
+func (f *FormPanel) SetBeforeInsert(po FormPostFn) *FormPanel {
+	f.BeforeInsert = po
+	return f
+}
 func (f *FormPanel) SetInsertFn(po FormPostFn) *FormPanel {
 	f.InsertFn = po
 	return f

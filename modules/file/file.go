@@ -72,7 +72,8 @@ func Upload(c UploadFun, form *multipart.Form) error {
 		if err != nil {
 			return err
 		}
-
+		form.Value["_filename_"+k] = []string{fileObj.Filename}
+		form.Value["_filesize_"+k] = []string{humanize.Bytes(uint64(fileObj.Size))}
 		form.Value[k] = []string{pathStr}
 	}
 
